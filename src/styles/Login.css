@@ -1,0 +1,203 @@
+.loader{
+  
+    width: 4.5rem;
+    height: 4.5rem;
+    margin: 2vh;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .circular{
+    animation: rotate 2s linear infinite;
+    height: 100px;
+    
+    width: 100px;
+    text-align: center;
+  }
+  
+  .path {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+    stroke:#B6463A;
+    animation:
+     dash 1.5s ease-in-out infinite,
+     color 6s ease-in-out infinite
+    ;
+    stroke-linecap: round;
+  }
+  
+  @keyframes rotate{
+   100%{
+    transform: rotate(360deg);
+   }
+  }
+  @keyframes dash{
+   0%{
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+   }
+   50%{
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -35;
+   }
+   100%{
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -124;
+   }
+  }
+  @keyframes color{
+    100%, 0%{
+      stroke: red;
+    }
+    40%{
+      stroke: blue;
+    }
+    66%{
+      stroke: green;
+    }
+    80%, 90%{
+      stroke: yellow;
+    }
+  }
+.back-login{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(238, 238, 238, 0.475);
+}
+.container-login{
+    height: 45vh;
+    width: 22vw;
+    position: fixed;
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%,-7%);
+    background-color: white;
+    z-index: 1000;
+    border: 0.01rem solid rgba(0, 0, 0, 0.248);
+    display: flex;
+    flex-direction: column;
+    justify-content:space-evenly;
+    align-items: center;
+    
+    
+}
+input{
+    
+    
+    padding: 8px 12px;
+    border: 0.5px solid #dbdbdb;
+    box-sizing: border-box;
+    border-radius: 3px;
+    width: 90%;
+}
+input:focus{
+    border: 1px solid gray;
+    background-color: rgba(238, 238, 238, 0.6);
+    outline: none;
+}
+.error{
+    color: red;
+}
+.container-login button{
+    background-color: #3897f0;
+    border: 1px solid #3897f0;
+    padding: 0.6vh;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 90%;
+}
+.second{
+    height: 10vh;
+    width: 22vw;
+    position: fixed;
+    top: 56%;
+    left: 50%;
+    transform: translate(-50%,-56%);
+    background-color: white;
+    z-index: 1000;
+    border: 0.01rem solid rgba(0, 0, 0, 0.248);
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+}
+.forgot{
+    color: blue;
+    font-size: small;
+    cursor: pointer;
+}
+.container-login-footer{
+    height: 10vh;
+    width: 100vw;
+    position: fixed;
+    left: 0%;
+    top: 93%;
+    transform: translate(0%,-90%);
+    z-index: 1000;
+    
+    text-transform: uppercase;
+    
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.get-the-app{
+    height: 15vh;
+    width: 100vw;
+    position: fixed;
+    left: 0%;
+    top: 78%;
+    transform: translate(0%,-78%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    
+    
+}
+.badge{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+.footer-nav ul
+{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+.badge >img
+{
+  width: 7rem;
+  height: 4rem;
+  margin-right: 0.7rem;
+  margin-left: 0.7rem;
+  object-fit :contain;
+
+}
+.badge{
+    height: 5rem;
+}
+.footer-nav ul li
+{
+  margin-right: 1.6rem;
+}
+
+.footer-nav ul li a
+{
+  color: #003569;
+}
+
+.copyright-notice
+{
+  color: #999999;
+}

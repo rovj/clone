@@ -1,0 +1,125 @@
+.loader{
+  
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: 2vh;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.circular{
+  animation: rotate 2s linear infinite;
+  height: 100px;
+  
+  width: 100px;
+  text-align: center;
+}
+
+.path {
+  stroke-dasharray: 1,200;
+  stroke-dashoffset: 0;
+  stroke:#B6463A;
+  animation:
+   dash 1.5s ease-in-out infinite,
+   color 6s ease-in-out infinite
+  ;
+  stroke-linecap: round;
+}
+
+@keyframes rotate{
+ 100%{
+  transform: rotate(360deg);
+ }
+}
+@keyframes dash{
+ 0%{
+  stroke-dasharray: 1,200;
+  stroke-dashoffset: 0;
+ }
+ 50%{
+  stroke-dasharray: 89,200;
+  stroke-dashoffset: -35;
+ }
+ 100%{
+  stroke-dasharray: 89,200;
+  stroke-dashoffset: -124;
+ }
+}
+@keyframes color{
+  100%, 0%{
+    stroke: red;
+  }
+  40%{
+    stroke: blue;
+  }
+  66%{
+    stroke: green;
+  }
+  80%, 90%{
+    stroke: yellow;
+  }
+}
+.video-container{
+    margin-top: 1.5vh;
+    height : 76vh;
+    width: 21%;
+    border-radius:20px ;
+    background-color: white;
+    overflow: scroll;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+}
+.video-container::-webkit-scrollbar{
+    display: none;
+}
+.videos{
+    height: 100%;
+    position: relative;
+}
+.fa{
+    position: absolute;
+    bottom: 3%;
+    left: 5%;
+    display: flex;
+    color: white;
+    font-family:sans-serif;
+    align-items: center;
+}
+.img_reel {
+    
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    object-fit :cover;
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+    
+}
+.name{
+    margin-bottom: 1rem;
+}
+.like{
+    position:absolute;
+    bottom: 12%;
+    right: 5%;
+    
+}
+.likes{
+  color: white;
+}
+.liked{
+    color: red;
+    font-size: 1.5rem;
+}
+.dislike{
+    color: white;
+    font-size: 1.5rem;
+}
+.chat{
+  color: white;
+  font-size: 1.4rem;
+  position:absolute;
+  bottom: 5%;
+  right: 5%;
+}
