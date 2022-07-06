@@ -38,7 +38,9 @@ function Signup() {
       fullname : name,
       profileUrl : url,
       createdAt : database.getTimeStamp,
-      postIds : []
+      postIds : [],
+      followers : [],
+      following : []
     });
     //await signInWithEmailAndPassword(auth,email,password);
   }

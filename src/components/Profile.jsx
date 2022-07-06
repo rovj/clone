@@ -36,10 +36,7 @@ function Profile() {
           temp = [];
           querySnapshot.forEach((doc)=>{
               let data = {...doc.data(),postId : doc.id};
-              console.log(data.userId+" added");
               temp.push(data);
-              
-              console.log("called posts");
           })
           setPosts(temp);
           

@@ -1,58 +1,42 @@
-.main{
-    margin-top: 5rem;
-}
-.img{
-    height: 6.5rem;
-    width: 6.5rem;
-    border-radius: 50%;
-    object-fit :cover;
+.profile-container {
+    height: fit-content;
+    min-height: 92vh;
+    width: 65% !important;
+    margin: 0 auto !important;
+    margin-top: 8vh !important;
+    padding: 40px !important;
 }
 
-.post-info{
-    position: fixed;
-    top: 13vh;
-    left: 58vw;
-    height: 8.5rem;
-    
-    text-align: start;
+.profile-image > img{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    object-fit: cover;
 }
-.img-div{
-    position: fixed;
-    top: 10vh;
-    left: 31vw;
+
+.profile-content-container {
+    padding: 10px;
+    gap: 20px;
 }
-.separator{
-    position: fixed;
-    top: 27vh;
-    width: 60vw;
-    height: 0.5vh;
-    left: 20vw;
-    
+
+.profile-content {
+    gap: 20px;
 }
-hr.rounded {
-    border-top: 0.5vh solid #bbb;
-    border-radius: 5px;
+
+.profile-stats {
+    gap: 40px;
+    margin-top: -20px;
 }
-.post-list{
-    position: fixed;
-    top: 31.5vh;
-    width: 60vw;
-    left:20vw;
-    display: flex;
-    flex-wrap: wrap;
-    gap:1.4rem;
-    padding: 0.5rem;
-    
-    overflow-y:scroll;
-    height: 65vh;
-    scrollbar-width: 0;
+
+.profile-posts {
+    gap: 40px;
 }
-.post-list::-webkit-scrollbar{
-    display: none;
+
+.profile-videos {
+    height: 350px;
+    width: 100%;
 }
-.profile-videos{
-    height: 23rem;
-    width: 13rem;
-    object-fit :cover;
-    
+
+.progressbar{
+    margin-bottom: 20px;
 }

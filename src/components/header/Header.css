@@ -9,7 +9,7 @@
     justify-content:space-between;
 }
 .header-logo{
-    width: 50%;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,7 +30,7 @@
     object-fit: cover;
 }
 .header-links{
-    width: 50%;
+    
     display: flex;
     align-items: center;
     justify-content: center;

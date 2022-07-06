@@ -60,15 +60,30 @@
     stroke: yellow;
   }
 }
+.post-container{
+  display: flex;
+  width : 100%;
+  align-items : flex-start;
+  justify-content: space-around;
+}
 .video-container{
     margin-top: 1.5vh;
-    height : 76vh;
-    width: 21%;
+    height : 85vh;
+    width: 25%;
     border-radius:20px ;
     background-color: white;
     overflow: scroll;
     scroll-snap-type: y mandatory;
     scrollbar-width: none;
+}
+.post-left-container{
+  width: 35%;
+  
+}
+.post-right-container{
+  width: 35%;
+  padding: 10px;
+  text-align: center;
 }
 .video-container::-webkit-scrollbar{
     display: none;

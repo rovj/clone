@@ -6,7 +6,6 @@ import { updateDoc,doc } from 'firebase/firestore';
 function Like({user,post}) {
   const [like,setLike] = useState(true);
   useEffect(()=>{
-    console.log("likes => "+post.likes.length+" hi");
     let check = post.likes.includes(user.docId)?true:false;
     setLike(check);
     

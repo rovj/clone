@@ -17,27 +17,21 @@ import { Timestamp } from "firebase/firestore";
 import Posts from "./Posts";
 import Header from "./header/Header";
 
+
 function Feed() {
   let contextObj = useContext(AuthContext);
-  //console.log(contextObj.user.postIds+" => have a look");
   let [error, setError] = useState("");
-  let [temp, setTemp] = useState(false);
-
   let user = contextObj.user;
-
+  
   const handleClick = () => {
     document.getElementById("upload-input").value = "";
     document.getElementById("upload-input").click();
   };
   const apply = () => {
     document.getElementById("pb").style.display = "block";
-    //document.getElementById("uc").style.pointerEvents = "none";
-    //document.getElementById("uc").style.opacity = "0.5";
   };
   const remove = () => {
     document.getElementById("pb").style.display = "none";
-    //document.getElementById("uc").style.pointerEvents = "auto";
-    //document.getElementById("uc").style.opacity = "1";
   };
   const handleChange = (file) => {
     console.log(file);
@@ -75,45 +69,50 @@ function Feed() {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          let obj = {
-            likes: [],
-            comments: [],
-            pId: uid,
-            pUrl: downloadURL,
-            uName: user.fullname,
-            uProfile: user.profileUrl,
-            userId: user.docId,
-            createdAt: Timestamp.now(),
-          };
-          addDoc(collection(firestore, "posts"), obj)
-            .then((ref) => {
-              console.log(ref.id);
+          addDoc((collection(firestore,"seenposts")),{postId : "" , visitedUsers : []}).then((seenRef)=>{
+            let obj = {
+              likes: [],
+              comments: [],
+              pId: uid,
+              pUrl: downloadURL,
+              uName: user.fullname,
+              uProfile: user.profileUrl,
+              userId: user.docId,
+              createdAt: Timestamp.now(),
+              seenpost : seenRef.id
+            }
+            
+            addDoc(collection(firestore, "posts"), obj)
+            .then(async (ref) => {
               let newArr = [...user.postIds, ref.id];
-              updateDoc(doc(firestore, "users", user.docId), {
+              await updateDoc(doc(firestore, "users", user.docId), {
                 postIds: newArr,
-              }).then(() => {
-                console.log(user.postIds);
-              });
+              })
+              await updateDoc(doc(firestore,"seenposts",seenRef.id),{
+                postId : ref.id
+              })
             })
             .then(() => {
               remove();
             })
             .catch((err) => {
+              contextObj.setPostedByUser(false);
               setError(err.message);
               setTimeout(() => {
                 setError("");
               }, 2000);
               remove();
             });
+          })
         });
       }
     );
-
-    console.log("end");
   };
   return (
     <>
+    
       <Header handleClick={handleClick}/>
+    
       <div className="main_continer">
         <input
           type="file"
@@ -132,7 +131,7 @@ function Feed() {
           10%
         </progress>
         {error != "" && <div>{error}</div>}
-        <Posts user={user} />
+        <Posts user={user}  />
       </div>
     </>
   );

@@ -1,12 +1,14 @@
 import React from 'react';
-import { Redirect, useLocation } from 'react-router-dom';
-import { BrowserRouter,Route,Switch } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { BrowserRouter,Route } from 'react-router-dom';
+import { Routes } from 'react-router-dom';
 import './App.css';
 import Feed from './components/Feed';
 import Login from './components/Login';
 import PageNotFound from './components/PageNotFound';
 import Profile from './components/pages/profile/Profile'
 import Signup from './components/Signup';
+import VisitedProfile from './components/pages/VisitedProfile/VisitedProfile';
 import { AuthContextProvider } from './context/AuthContext.jsx';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext.jsx';
@@ -25,24 +27,25 @@ const App = () => {
   let theme = contextObj.theme;
   console.log(location)
   return (
-    
+    <BrowserRouter>
       <ThemeProvider theme={(theme === 'light') ? lightTheme : darkTheme}>
-        <BrowserRouter>
+       
           <Paper>
             
-            <Switch>
-              <PrivateRoute2  path="/login" comp={Login} />
-              <PrivateRoute  path="/feed" comp={Feed} />
-              <PrivateRoute  path="/profile/:id" comp={Profile} />
-              <PrivateRoute2  path="/signup" comp={Signup} />
-              <Redirect from="/" to="/feed"/>
-              <Route>
-                <PageNotFound/>
-              </Route>
-            </Switch>
+            <Routes>
+              <Route path="/login" element={<PrivateRoute2 comp={Login} />} ></Route>
+              <Route path="/feed" element={<PrivateRoute comp={Feed}  />} ></Route>
+              <Route  path="/profile/:id" element={<PrivateRoute comp={Profile}  />} ></Route>
+              <Route  path="/visit/:id" element={<PrivateRoute comp={VisitedProfile}  />} ></Route>
+              <Route path="/signup" element={<PrivateRoute2 comp={Signup}/>} ></Route>
+              
+              <Route path="/" element={<Navigate to ="/feed" />}/>
+              <Route  element={<PageNotFound/>} ></Route>
+            </Routes>
           </Paper>
-        </BrowserRouter>
+        
       </ThemeProvider>
+    </BrowserRouter>
     
     
   );
@@ -50,31 +53,11 @@ const App = () => {
 function PrivateRoute(props){
   let Component = props.comp;
   let contextObj = useContext(AuthContext);
-  return (
-    <Route
-      {...props}
-      render={
-        (props) => {
-          return contextObj.cUser != null ? <Component {...props}></Component> :
-          <Redirect {...props} to="/login"></Redirect>
-        }
-      }
-    ></Route>
-  )
+  return contextObj.cUser != null ? <Component {...props}></Component> : <Navigate {...props} to ="/login" />
 }
 function PrivateRoute2(props){
   let Component = props.comp;
   let contextObj = useContext(AuthContext);
-  return (
-    <Route
-      {...props}
-      render = {
-        (props) => {
-          return contextObj.cUser ==null ? <Component {...props}></Component> : 
-          <Redirect {...props} to="/feed"></Redirect>
-        }
-      }
-    ></Route>
-  )
+  return contextObj.cUser ==null ? <Component {...props}></Component> : <Navigate {...props} to ="/feed" />
 }
 export default App;

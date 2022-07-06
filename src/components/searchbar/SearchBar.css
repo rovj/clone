@@ -1,0 +1,33 @@
+.search{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.searchInputs{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.dataResult {
+  
+  width: 25vw;
+  height: 200px;
+  
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.dataResult::-webkit-scrollbar {
+  display: none;
+}
+.dataItem p {
+  margin-left: 10px;
+}
+#clearBtn {
+  cursor: pointer;
+}
+

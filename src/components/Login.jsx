@@ -23,8 +23,6 @@ function Login() {
     try{
       setLoader(true);
       let userCred = await signInWithEmailAndPassword(auth,email,password);
-      //setUser(userCred.user);
-      //console.log(user);
     }
     catch(err){
       setError(err.message);
