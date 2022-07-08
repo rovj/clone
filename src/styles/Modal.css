@@ -14,7 +14,7 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
 }
-.container{
+.container-modal{
     height: 93.5vh;
     width: 60vw;
     position: fixed;

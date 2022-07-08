@@ -20,7 +20,10 @@ import { doc, setDoc, getDoc, getDocs } from "firebase/firestore";
 import { storage } from "../../../Firebase";
 import { updateDoc } from "firebase/firestore";
 import { Timestamp } from "firebase/firestore";
-import { red } from "@mui/material/colors";
+import { FieldPath } from "firebase/firestore";
+import { documentId } from "firebase/firestore";
+import FollowModal from "../../FollowModal";
+
 
 function Profile() {
   let contextObj = useContext(AuthContext);
@@ -34,7 +37,42 @@ function Profile() {
   let [error, setError] = useState("");
   let [numFollowers, setNumFollowers] = useState(0);
   let [numFollowing, setNumFollowing] = useState(0);
+  let [isOpenFollow,setIsOpenFollow] = useState(false);
+  let [isFollowerList,setIsFollowerList] = useState(false);
+  let [followList,setFollowList] = useState(null);
   let user = contextObj.user;
+  const handleFollowers = async() => {
+    let userList = user.followers;
+    let tempFollowers = [];
+    const q = query(collection(firestore, "users"), where(documentId(), 'in', userList));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      let data = { ...doc.data(), docId: doc.id };
+      tempFollowers.push(data);
+    });
+    setIsOpenFollow(true);
+    setIsFollowerList(true);
+    setFollowList(tempFollowers);
+
+  }
+  const handleFollowing = async() => {
+    let userList = user.following;
+    let tempFollowing = [];
+    const q = query(collection(firestore, "users"), where(documentId(), 'in', userList));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      let data = { ...doc.data(), docId: doc.id };
+      tempFollowing.push(data);
+    });
+    setIsOpenFollow(true);
+    setIsFollowerList(false);
+    setFollowList(tempFollowing);
+  }
+  const resetFollow = () => {
+    setIsOpenFollow(false);
+    setIsFollowerList(false);
+    setFollowList(null);
+  }
   const handleClickProfile = () => {
     document.getElementById("upload-input").value = "";
     document.getElementById("upload-input").click();
@@ -171,6 +209,7 @@ function Profile() {
         <Grid container lg={12} className="profile-details">
           <Grid item lg={3} className="profile-image">
             <img src={profileUrl} />
+            
           </Grid>
           <Grid container lg={9} className="profile-content-container">
             <Grid container lg={12} className='profile-content'>
@@ -206,12 +245,12 @@ function Profile() {
                   <Typography variant="strong" sx={{ fontWeight: "bold", fontSize: '14px' }}>{posts.length}</Typography> &nbsp;posts
                 </Typography>
               </Grid>
-              <Grid item >
+              <Grid onClick={handleFollowers} item className="followers" >
                 <Typography variant="h6" sx={{ fontWeight: "normal", fontSize: '14px' }}>
                   <Typography variant="strong" sx={{ fontWeight: "bold", fontSize: '14px' }}>{numFollowers}</Typography> &nbsp;followers
                 </Typography>
               </Grid>
-              <Grid item>
+              <Grid onClick={handleFollowing} item className="following">
                 <Typography variant="h6" sx={{ fontWeight: "normal", fontSize: '14px' }}>
                   <Typography variant="strong" sx={{ fontWeight: "bold", fontSize: '14px' }}>{numFollowing}</Typography> &nbsp;following
                 </Typography>
@@ -242,6 +281,7 @@ function Profile() {
             })
           }
         </Grid>
+        <FollowModal isFollowerList={isFollowerList} modalList={followList} isOpen={isOpenFollow} resetFollow={resetFollow}/>
       </Grid>
     </>
 
