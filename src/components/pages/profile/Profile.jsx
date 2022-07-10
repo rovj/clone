@@ -28,6 +28,10 @@ import { useCallback } from "react";
 import { useRef } from "react";
 import { getAuth, updatePassword } from "firebase/auth";
 import { updateEmail } from "firebase/auth";
+import {
+  EmailAuthProvider,
+  reauthenticateWithCredential
+} from 'firebase/auth'
 
 let followInitialState = {
   isOpenFollow: false,
@@ -125,6 +129,7 @@ function Profile() {
   let newPasswordRef = useRef();
   let confirmPasswordRef = useRef();
   let emailRef = useRef();
+  let emailPasswordRef = useRef();
   let user = contextObj.user;
 
   useEffect(() => {
@@ -146,42 +151,65 @@ function Profile() {
       setToastError("Enter proper values!");
     } else {
       const auth = getAuth();
-      const user = auth.currentUser;
+      const credential = EmailAuthProvider.credential(
+        auth.currentUser.email,
+        oldPasswordRef.current.value
+      )
       setLoader(true);
-      updatePassword(user, newPasswordRef.current.value)
-        .then(() => {
-          setLoader(false);
-          resetEdit();
-          setToastError("Password Changed Successfully!");
-        })
-        .catch((error) => {
-          setLoader(false);
-          resetEdit();
-          setToastError(error);
-        });
+      let newPassword = newPasswordRef.current.value;
+      reauthenticateWithCredential(
+          auth.currentUser, 
+          credential
+      ).then(()=>{
+        updatePassword(auth.currentUser, newPassword)
+      }).then(() => {
+        setLoader(false);
+        resetEdit();
+        setToastError("Password Changed Successfully!");
+      }).catch((error) => {
+        setLoader(false);
+        resetEdit();
+        setToastError(error);
+      });
     }
   };
   const updateCurrentEmail = () => {
     if (
       emailRef.current.value == "" ||
       emailRef.current.value == null ||
-      emailRef.current.value == undefined
+      emailRef.current.value == undefined ||
+      emailPasswordRef.current.value == "" ||
+      emailPasswordRef.current.value == null ||
+      emailPasswordRef.current.value == undefined
     ) {
       setToastError("Enter proper values!");
     } else {
       const auth = getAuth();
+      const credential = EmailAuthProvider.credential(
+        auth.currentUser.email,
+        emailPasswordRef.current.value
+      )
       setLoader(true);
-      updateEmail(auth.currentUser, emailRef.current.value)
-        .then(() => {
-          setLoader(false);
-          resetEdit();
-          setToastError("Email Changed Successfully!");
+      let newEmail = emailRef.current.value
+      reauthenticateWithCredential(
+        auth.currentUser, 
+        credential
+      ).then(()=>{
+        updateEmail(auth.currentUser, newEmail)
+      }).then(() => {
+        updateDoc(doc(firestore, "users", contextObj.user.docId), {
+          email : newEmail
         })
-        .catch((error) => {
-          setLoader(false);
-          resetEdit();
-          setToastError(error);
-        });
+      }).then(()=>{
+        setLoader(false);
+        resetEdit();
+        setToastError("Email Changed Successfully!");
+      })
+      .catch((error) => {
+        setLoader(false);
+        resetEdit();
+        setToastError(error);
+      });
     }
   };
   const setToastError = (err) => {
@@ -738,18 +766,22 @@ function Profile() {
                   </>
                 ) : (
                   <div className="update-name">
-                    <div className="modal-title update-name-title">
+                    <div className="modal-title update-email-title">
                       <p>
                         <b>Email Updation</b>
                       </p>
                     </div>
-                    <div className="modal-content update-name-content">
+                    <div className="modal-content update-email-content">
                       <p>
                         <b>Please enter your new email.</b>
                       </p>
                       <input type="text" id="changeName" ref={emailRef} />
+                      <p>
+                        <b>Please enter your password.</b>
+                      </p>
+                      <input type="password" id="changeName" ref={emailPasswordRef}/>
                     </div>
-                    <div className="modal-footer update-name-footer">
+                    <div className="modal-footer update-email-footer">
                       <button className="modal-footer-button" onClick={updateCurrentEmail}>OK</button>
                       <button
                         className="modal-footer-button"

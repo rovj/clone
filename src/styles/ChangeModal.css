@@ -17,7 +17,6 @@
 
 .container-modal-change{
     width: 20vw;
-    border: 1px solid green;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -104,6 +103,19 @@
 }
 
 .update-name-footer{
+    height: 20%;
+}
+
+.update-email-content{
+    gap: 10%;
+    height: 60%;
+}
+
+.update-email-title{
+    height: 20%;
+}
+
+.update-email-footer{
     height: 25%;
 }
 
