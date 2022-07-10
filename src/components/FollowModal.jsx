@@ -35,7 +35,7 @@ function FollowModal(props) {
                 </div>
                 <div className="modal-follow-body">
                     {modalList.map((user,index)=>{
-                        return <UserItem user={user}  />
+                        return <UserItem user={user} />
                     })}
                 </div>
               </div>

@@ -98,6 +98,7 @@ function Signup() {
     setLoader(false);
   }
   const select = () =>{
+    document.getElementById("input_image").value = "";
     document.getElementById("input_image").click();
   }
   

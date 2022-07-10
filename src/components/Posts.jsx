@@ -44,10 +44,8 @@ const Posts = ({ user }) => {
   useEffect(()=>{
     if(posts!=null){
       if(prePosts!=null && prePosts.length<posts.length && prePosts[0].postId !== posts[0].postId){
-        console.log("------------------------------------------------------")
         const topLink = document.getElementById(`#${posts[0].postId}`);
         topLink.click();
-        console.log("----------------------------------------------");
       }
       setPrePosts(posts);
     }
